@@ -1,0 +1,87 @@
+const user_info = require("../../../../../test_data/global_info");
+const test_data = require("../../../../../test_data/test_info_40");
+const util = require("../../../../../pageobjects/utility");
+
+export default async function suite() {
+  it("Fj_TestScheme_40_0004_step_30: You must be able to update the check box for 金利優遇適用 preferential interest rates. (set randomly)", async () => {
+    const stepNum = "30"; // ★ 新環境適用' New Env Implementation
+
+    // Go to INI Record
+    await util.Open_SF_Record_URL(
+      1,
+      user_info.object.ini_obj,
+      test_data.testData.ini_id3
+    );
+
+    // Update 職域・協会けんぽ・イクボス・ファミボス宣言 field
+    const edit = await $(
+      ".//button[@title='" +
+        test_data.testData.ini_compilation_declaration_edit_btn +
+        "']"
+    );
+    await edit.$(function () {
+      this.scrollIntoView({
+        block: "center",
+      });
+    });
+    await edit.waitForClickable({ timeout: 10000 });
+    await edit.click();
+    await browser.pause(1000);
+
+    // 職域・協会けんぽ・イクボス・ファミボス宣言
+    const ini_compilation_declaration_lbl = await $(
+      ".//*[contains(text(), '" +
+        test_data.testData.ini_compilation_declaration_lbl +
+        "')]"
+    );
+    await ini_compilation_declaration_lbl.scrollIntoView();
+    await ini_compilation_declaration_lbl.waitForClickable({ timeout: 10000 });
+    await ini_compilation_declaration_lbl.click();
+    await browser.pause(1000);
+
+    // Save
+    const saveedit = await $(
+      ".//button[@name='" + test_data.testData.sf_saveedit_btn + "']"
+    );
+    await saveedit.$(function () {
+      this.scrollIntoView({
+        block: "center",
+      });
+    });
+    await saveedit.click();
+    await browser.pause(20000);
+
+    // Screenshot
+    const headerBar = await $(".//header[@id='oneHeader']");
+    const tabheader = await $(
+      ".//div[@class='slds-no-print oneAppNavContainer']"
+    );
+    await $(".//*[@class='main-container slds-grid']").$(function () {
+      var left = document.getElementsByClassName("col left-col slds-col"),
+        middle = document.getElementsByClassName("col main-col slds-col"),
+        right = document.getElementsByClassName("col right-col slds-col");
+      var height = Math.max(
+        left.offsetHeight,
+        middle.offsetHeight,
+        right.offsetHeight
+      );
+      this.style = "height:" + height + "px!important";
+    });
+    await browser.pause(10000);
+    await browser.saveFullPageScreen(
+      // ★ 新環境適用' New Env Implementation
+      user_info.userInformation.screenshot +
+        test_data.testData.spec40 +
+        "_" +
+        test_data.testData.tab0004 +
+        "_" +
+        stepNum +
+        "-1",
+      {
+        hideAfterFirstScroll: [headerBar, tabheader],
+        fullPageScrollTimeout: 3000,
+        disableCSSAnimation: true,
+      }
+    );
+  });
+}

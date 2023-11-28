@@ -1,0 +1,26 @@
+===Project Setup===
+1. Open Terminal, and enter following command: npm install. Then press Enter
+* This command will read all the dependencies that were defined in the package.json file and automatically installs them for you
+note: just in case this message shows up on your end, please click Yes to add 'node_modules' to .gitignore files
+
+2. Make sure to update Chrome browser to its latest version: Settings | About Chrome
+
+3. In terminal, input following command: npm install chromedriver@[insert version here] --save-dev
+sample: 
+Note: chromedriver version changes from time to time.
+
+Chromedriver version must match current chrome version
+
+4. node_modules folder should appear inside project folder
+
+5. Next, enter npm run command. Then press Enter
+* This command sets the NODE environment variable to the node executable with which npm is executed
+
+===Execution===
+1. If you are going to execute the scripts, kindly check first the test_info_XX for the contact detail or any prerequisites in creating test data
+2. Check the main folder under the specXX (example: spec30)
+3. Click the designated tab that you want to execute (example: 30_0001)
+4. If you are going to execute a specific process only, comment out the other processes
+5. Go to terminal and execute the test script command. It will execute the test scripts according to the designated tab
+npx wdio run ./wdio.conf.js --spec ./test/specs/{SpecNo}/main/{SpecNo_TabNo.js}
+npx wdio run ./wdio.conf.js --spec ./test/specs/30/main/30_0001.js
